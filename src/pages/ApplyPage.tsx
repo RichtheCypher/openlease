@@ -3,7 +3,7 @@ import { useSearchParams, Link } from 'react-router-dom';
 import { 
   Check, ArrowRight, ArrowLeft, CheckCircle2,
   Home, User, Building, Users, Clock, DollarSign, FileText,
-  PenLine, Upload, Trash2
+  PenLine, Upload, Trash2, FileText as FileIcon, Image as ImageIcon
 } from 'lucide-react';
 import type { MaritalStatus, PaymentMethod } from '../types';
 import { store } from '../services/store';
@@ -156,6 +156,8 @@ export const ApplyPage: React.FC = () => {
     reason_for_moving: '',
     terms_agreed: false,
     signature_name: '',
+    signature_image: null as string | null,
+    documents: [] as File[],
   });
 
 
@@ -242,6 +244,18 @@ export const ApplyPage: React.FC = () => {
 
     setSubmitting(true);
     try {
+      // Process documents into base64 strings
+      const documents: Record<string, string> = {};
+      for (const file of formData.documents) {
+        const base64 = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = () => reject(reader.error);
+          reader.readAsDataURL(file);
+        });
+        documents[file.name] = base64;
+      }
+
       const app = await store.submitApplication({
         property_id: formData.property_id || undefined,
         property_name: formData.property_name || 'General Inquiry',
@@ -275,9 +289,11 @@ export const ApplyPage: React.FC = () => {
         amount_available_today: Number(formData.amount_available_today),
         reason_for_moving: formData.reason_for_moving || undefined,
         terms_agreed: formData.terms_agreed,
-        signature_name: signatureMode === 'draw'
+        signature_name: formData.signature_name,
+        signature_image: signatureMode === 'draw'
           ? (canvasRef.current?.toDataURL('image/png') || '')
           : (uploadedSignature || ''),
+        documents,
         signature_date: new Date().toISOString(),
       });
 
@@ -977,6 +993,89 @@ export const ApplyPage: React.FC = () => {
                   value={formData.reason_for_moving}
                   onChange={(e) => setFormData({ ...formData, reason_for_moving: e.target.value })}
                 />
+              </div>
+
+              {/* Supporting Documents Upload */}
+              <div className="form-group" style={{ marginTop: '1.5rem' }}>
+                <label className="form-label">Supporting Documents (Optional)</label>
+                <div style={{
+                  border: '1.5px dashed var(--border-medium)',
+                  borderRadius: 'var(--radius-sm)',
+                  backgroundColor: '#fff',
+                  padding: '1.25rem',
+                  textAlign: 'center'
+                }}>
+                  <FileIcon size={28} color="var(--text-muted)" style={{ margin: '0 auto 0.5rem', display: 'block' }} />
+                  <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', margin: '0 0 0.5rem' }}>
+                    Upload any supporting documents (ID, pay stubs, proof of income, references, etc.)
+                  </p>
+                  <label
+                    htmlFor="doc-upload"
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.4rem',
+                      cursor: 'pointer',
+                      padding: '0.6rem 1.25rem',
+                      borderRadius: '4px',
+                      backgroundColor: 'var(--bg-subtle)',
+                      border: '1px solid var(--border-light)',
+                      fontSize: '0.8125rem',
+                      fontWeight: 600
+                    }}
+                  >
+                    <Upload size={14} />
+                    Select Files
+                  </label>
+                  <input
+                    id="doc-upload"
+                    type="file"
+                    multiple
+                    accept="image/*,application/pdf"
+                    style={{ display: 'none' }}
+                    onChange={(e) => {
+                      if (e.target.files) {
+                        setFormData({ ...formData, documents: [...formData.documents, ...Array.from(e.target.files)] });
+                        e.target.value = '';
+                      }
+                    }}
+                  />
+                  <p style={{ fontSize: '0.725rem', color: 'var(--text-muted)', margin: '0.75rem 0 0' }}>
+                    Supported: images (PNG, JPG) and PDF. Files are stored securely with your application.
+                  </p>
+                </div>
+
+                {formData.documents.length > 0 && (
+                  <div style={{ marginTop: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
+                    {formData.documents.map((file, index) => (
+                      <div
+                        key={index}
+                        style={{
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: '0.5rem',
+                          padding: '0.5rem 0.75rem',
+                          backgroundColor: 'var(--bg-subtle)',
+                          border: '1px solid var(--border-light)',
+                          borderRadius: '4px',
+                          fontSize: '0.775rem'
+                        }}
+                      >
+                        <ImageIcon size={14} color="var(--accent-olive)" />
+                        <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{file.name}</span>
+                        <span style={{ color: 'var(--text-muted)' }}>{(file.size / 1024).toFixed(1)} KB</span>
+                        <button
+                          type="button"
+                          onClick={() => setFormData({ ...formData, documents: formData.documents.filter((_, i) => i !== index) })}
+                          style={{ background: 'none', border: 'none', cursor: 'pointer', color: 'var(--status-rejected)', padding: '0.1rem' }}
+                          title="Remove file"
+                        >
+                          <Trash2 size={13} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
 
               {/* Terms & Conditions Notice */}

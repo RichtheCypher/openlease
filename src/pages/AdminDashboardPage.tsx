@@ -143,7 +143,7 @@ export const AdminDashboardPage: React.FC = () => {
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', fontSize: '0.8125rem' }}>
             <span style={{ color: '#A6A095' }}>
-              Logged in as <strong style={{ color: '#FFFFFF' }}>{adminUser?.email || 'Staff Administrator'}</strong>
+              Logged in as <strong style={{ color: '#FFFFFF' }}>{adminUser?.username || 'Staff Administrator'}</strong>
             </span>
             <Link to="/" style={{ color: '#D4CEBF' }}>
               View Public Site

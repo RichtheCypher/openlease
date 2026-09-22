@@ -77,7 +77,11 @@ export interface RentalApplication {
   reason_for_moving?: string;
   terms_agreed: boolean;
   signature_name: string;
+  signature_image?: string | null;
   signature_date: string;
+
+  // Supporting documents (base64 encoded file references)
+  documents?: Record<string, string>;
 
   // Metadata
   status: ApplicationStatus;

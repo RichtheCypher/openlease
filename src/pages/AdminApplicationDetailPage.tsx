@@ -416,7 +416,7 @@ export const AdminApplicationDetailPage: React.FC = () => {
             </p>
           </div>
 
-          <div className="grid-2" style={{ borderTop: '1px solid var(--border-light)', paddingTop: '1rem' }}>
+<div className="grid-2" style={{ borderTop: '1px solid var(--border-light)', paddingTop: '1rem' }}>
             <div className="dossier-field">
               <span className="dossier-label">Terms & Authorization</span>
               <span className="dossier-value">
@@ -431,6 +431,63 @@ export const AdminApplicationDetailPage: React.FC = () => {
               </span>
             </div>
           </div>
+
+          {/* Signature Image Display */}
+          {application.signature_image && (
+            <div style={{ marginTop: '1.5rem', borderTop: '1px solid var(--border-light)', paddingTop: '1rem' }}>
+              <span className="dossier-label" style={{ display: 'block', marginBottom: '0.5rem' }}>Signature Image</span>
+              <img
+                src={application.signature_image}
+                alt="Electronic Signature"
+                style={{
+                  maxWidth: '300px',
+                  maxHeight: '120px',
+                  border: '1px solid var(--border-medium)',
+                  borderRadius: '4px',
+                  backgroundColor: '#fff'
+                }}
+              />
+            </div>
+          )}
+
+          {/* Supporting Documents Display */}
+          {application.documents && Object.keys(application.documents).length > 0 && (
+            <div style={{ marginTop: '1.5rem', borderTop: '1px solid var(--border-light)', paddingTop: '1rem' }}>
+              <span className="dossier-label" style={{ display: 'block', marginBottom: '0.75rem' }}>Supporting Documents</span>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
+                {Object.entries(application.documents).map(([filename, dataUrl]) => (
+                  <div
+                    key={filename}
+                    style={{
+                      border: '1px solid var(--border-medium)',
+                      borderRadius: '4px',
+                      padding: '0.75rem',
+                      backgroundColor: 'var(--bg-subtle)'
+                    }}
+                  >
+                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', marginBottom: '0.5rem', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                      {filename}
+                    </div>
+                    {dataUrl.startsWith('data:image') ? (
+                      <img
+                        src={dataUrl}
+                        alt={filename}
+                        style={{ maxWidth: '100%', maxHeight: '150px', objectFit: 'contain', display: 'block' }}
+                      />
+                    ) : (
+                      <a
+                        href={dataUrl}
+                        download={filename}
+                        style={{ color: 'var(--accent-olive)', fontSize: '0.8rem', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}
+                      >
+                        <FileText size={13} /> Download PDF
+                      </a>
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Footer actions */}

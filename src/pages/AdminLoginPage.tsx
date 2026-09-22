@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { Shield, Lock, Mail, ArrowRight, Home } from 'lucide-react';
+import { Shield, Lock, User, ArrowRight, Home } from 'lucide-react';
 import { store } from '../services/store';
 
 export const AdminLoginPage: React.FC = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState('');
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -15,18 +15,18 @@ export const AdminLoginPage: React.FC = () => {
     setError('');
     setLoading(true);
 
-    const res = await store.adminLogin(email, password);
+    const res = await store.adminLogin(username, password);
     if (res.success) {
       navigate('/admin');
     } else {
-      setError(res.error || 'Invalid credentials. Please verify your email and password.');
+      setError(res.error || 'Invalid credentials. Please verify your username and password.');
     }
     setLoading(false);
   };
 
   const handleQuickDemoLogin = async () => {
     setLoading(true);
-    await store.adminLogin('staff@openleasewithus.com');
+    await store.adminLogin('staff', 'password123');
     navigate('/admin');
   };
 
@@ -93,18 +93,18 @@ export const AdminLoginPage: React.FC = () => {
 
           <form onSubmit={handleLogin}>
             <div className="form-group">
-              <label className="form-label">Staff Email Address</label>
+              <label className="form-label">Username</label>
               <div style={{ position: 'relative' }}>
                 <span style={{ position: 'absolute', left: '10px', top: '10px', color: 'var(--text-muted)' }}>
-                  <Mail size={15} />
+                  <User size={15} />
                 </span>
                 <input
-                  type="email"
+                  type="text"
                   required
                   className="form-control"
                   style={{ paddingLeft: '2rem' }}
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
             </div>
@@ -155,6 +155,23 @@ export const AdminLoginPage: React.FC = () => {
           >
             Sign In with Staff Demo Account
           </button>
+
+          {/* Admin Credentials Info */}
+          <div style={{
+            marginTop: '1.5rem',
+            padding: '1rem',
+            backgroundColor: 'var(--bg-subtle)',
+            border: '1px solid var(--border-light)',
+            borderRadius: 'var(--radius-sm)',
+            fontSize: '0.75rem',
+            color: 'var(--text-secondary)',
+            lineHeight: 1.6
+          }}>
+            <div style={{ fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.35rem' }}>Admin Credentials</div>
+            <div><strong>Demo Username:</strong> staff</div>
+            <div><strong>Demo Password:</strong> password123</div>
+            <div><strong>Access:</strong> Any staff username with matching password</div>
+          </div>
         </div>
 
         <div style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.8125rem' }}>

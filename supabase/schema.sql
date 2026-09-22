@@ -77,8 +77,12 @@ create table if not exists public.applications (
   reason_for_moving text,
   terms_agreed boolean not null default true,
   signature_name text not null,
+  signature_image text,
   signature_date timestamp with time zone default now(),
-  
+
+  -- Supporting Documents (base64 encoded)
+  documents jsonb default '{}'::jsonb,
+
   -- Application Status
   status text not null default 'New' check (status in ('New', 'Under Review', 'Approved', 'Rejected')),
   staff_notes text,

@@ -111,6 +111,8 @@ export const store = {
             reason_for_moving: applicationData.reason_for_moving || null,
             terms_agreed: applicationData.terms_agreed,
             signature_name: applicationData.signature_name,
+            signature_image: applicationData.signature_image || null,
+            documents: applicationData.documents || {},
             signature_date: now,
             status: 'New',
           }])
@@ -209,34 +211,45 @@ export const store = {
   },
 
   // AUTHENTICATION
-  async adminLogin(email: string, password?: string): Promise<{ success: boolean; user?: any; error?: string }> {
+  async adminLogin(username: string, password?: string): Promise<{ success: boolean; user?: any; error?: string }> {
     if (isSupabaseConfigured && supabase && password) {
       try {
         const { data, error } = await supabase.auth.signInWithPassword({
-          email,
+          email: username,
           password
         });
         if (error) {
           return { success: false, error: error.message };
         }
-        localStorage.setItem(ADMIN_AUTH_KEY, JSON.stringify({ email: data.user.email, id: data.user.id, mode: 'supabase' }));
-        return { success: true, user: data.user };
+        localStorage.setItem(ADMIN_AUTH_KEY, JSON.stringify({ username: data.user.email, role: 'Staff Administrator', id: data.user.id, mode: 'supabase' }));
+        return { success: true, user: { username: data.user.email, role: 'Staff Administrator' } };
       } catch (e: any) {
         return { success: false, error: e.message || 'Login error' };
       }
     }
 
-    // Default administrative access verification
-    if (email.toLowerCase().includes('openleasewithus') || email.toLowerCase().includes('admin')) {
-      const staffUser = { email, role: 'Staff Administrator', authenticated_at: new Date().toISOString() };
+    // Username/password authentication (no email-based login)
+    if (username.toLowerCase() === 'staff' && password === 'password123') {
+      const staffUser = { username: 'staff', role: 'Staff Administrator', authenticated_at: new Date().toISOString() };
       localStorage.setItem(ADMIN_AUTH_KEY, JSON.stringify(staffUser));
       return { success: true, user: staffUser };
     }
 
-    // Accept demo credentials
-    const staffUser = { email, role: 'Leasing Staff', authenticated_at: new Date().toISOString() };
-    localStorage.setItem(ADMIN_AUTH_KEY, JSON.stringify(staffUser));
-    return { success: true, user: staffUser };
+    // Accept demo credentials (any staff username with matching password)
+    if (username.toLowerCase() === 'admin' && password === 'admin123') {
+      const staffUser = { username: 'admin', role: 'Administrator', authenticated_at: new Date().toISOString() };
+      localStorage.setItem(ADMIN_AUTH_KEY, JSON.stringify(staffUser));
+      return { success: true, user: staffUser };
+    }
+
+    // Accept demo credentials (any username with password 'password123')
+    if (password === 'password123') {
+      const staffUser = { username, role: 'Leasing Staff', authenticated_at: new Date().toISOString() };
+      localStorage.setItem(ADMIN_AUTH_KEY, JSON.stringify(staffUser));
+      return { success: true, user: staffUser };
+    }
+
+    return { success: false, error: 'Invalid username or password' };
   },
 
   adminLogout() {
