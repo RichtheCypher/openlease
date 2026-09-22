@@ -215,8 +215,11 @@ export const ApplyPage: React.FC = () => {
       if (!formData.terms_agreed) {
         errs.terms_agreed = 'You must review and agree to the terms & conditions';
       }
+      if (!formData.signature_name.trim()) {
+        errs.signature_name = 'Please enter your full legal name as it appears on your ID';
+      }
       if (!signatureProvided()) {
-        errs.signature_name = 'Please provide your signature to continue';
+        errs.signature_pad = 'Please provide your signature to continue';
       }
     }
 
@@ -291,8 +294,8 @@ export const ApplyPage: React.FC = () => {
         terms_agreed: formData.terms_agreed,
         signature_name: formData.signature_name,
         signature_image: signatureMode === 'draw'
-          ? (canvasRef.current?.toDataURL('image/png') || '')
-          : (uploadedSignature || ''),
+          ? (hasSignature && canvasRef.current ? canvasRef.current.toDataURL('image/png') : null)
+          : (uploadedSignature || null),
         documents,
         signature_date: new Date().toISOString(),
       });
@@ -1111,8 +1114,22 @@ export const ApplyPage: React.FC = () => {
 
               {/* Signature Section */}
               <div className="form-group" style={{ marginTop: '0.5rem' }}>
+                <label className="form-label" style={{ marginBottom: '0.35rem', display: 'block' }}>
+                  Full Legal Name (as it appears on your ID) <span className="required">*</span>
+                </label>
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="e.g. John Michael Doe"
+                  value={formData.signature_name}
+                  onChange={(e) => setFormData({ ...formData, signature_name: e.target.value })}
+                />
+                {errors.signature_name && <div className="form-error">{errors.signature_name}</div>}
+              </div>
+
+              <div className="form-group" style={{ marginTop: '1rem' }}>
                 <label className="form-label" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.5rem' }}>
-                  <span>Signature <span className="required">*</span></span>
+                  <span>Draw or Upload Signature <span className="required">*</span></span>
                   {/* Mode toggle */}
                   <div style={{ display: 'flex', gap: '0', border: '1px solid var(--border-medium)', borderRadius: '4px', overflow: 'hidden', fontSize: '0.75rem' }}>
                     <button
@@ -1230,7 +1247,7 @@ export const ApplyPage: React.FC = () => {
                   </div>
                 )}
 
-                {errors.signature_name && <div className="form-error" style={{ marginTop: '0.4rem' }}>{errors.signature_name}</div>}
+                {errors.signature_pad && <div className="form-error" style={{ marginTop: '0.4rem' }}>{errors.signature_pad}</div>}
                 <div className="form-hint">
                   Your signature constitutes a legally binding electronic signature under the US E-SIGN Act.
                 </div>

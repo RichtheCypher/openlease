@@ -416,7 +416,7 @@ export const AdminApplicationDetailPage: React.FC = () => {
             </p>
           </div>
 
-<div className="grid-2" style={{ borderTop: '1px solid var(--border-light)', paddingTop: '1rem' }}>
+          <div className="grid-2" style={{ borderTop: '1px solid var(--border-light)', paddingTop: '1rem' }}>
             <div className="dossier-field">
               <span className="dossier-label">Terms & Authorization</span>
               <span className="dossier-value">
@@ -425,15 +425,15 @@ export const AdminApplicationDetailPage: React.FC = () => {
             </div>
 
             <div className="dossier-field">
-              <span className="dossier-label">Electronic Signature</span>
+              <span className="dossier-label">Legal Name on Signature</span>
               <span className="dossier-value" style={{ fontFamily: 'var(--font-serif)', fontStyle: 'italic', fontSize: '1.15rem' }}>
-                {application.signature_name}
+                {application.signature_name || <em style={{ color: 'var(--text-muted)', fontStyle: 'normal', fontSize: '0.85rem' }}>Not provided</em>}
               </span>
             </div>
           </div>
 
           {/* Signature Image Display */}
-          {application.signature_image && (
+          {application.signature_image ? (
             <div style={{ marginTop: '1.5rem', borderTop: '1px solid var(--border-light)', paddingTop: '1rem' }}>
               <span className="dossier-label" style={{ display: 'block', marginBottom: '0.5rem' }}>Signature Image</span>
               <img
@@ -448,14 +448,19 @@ export const AdminApplicationDetailPage: React.FC = () => {
                 }}
               />
             </div>
+          ) : (
+            <div style={{ marginTop: '1.5rem', borderTop: '1px solid var(--border-light)', paddingTop: '1rem' }}>
+              <span className="dossier-label" style={{ display: 'block', marginBottom: '0.4rem' }}>Signature Image</span>
+              <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>No signature image captured.</span>
+            </div>
           )}
 
           {/* Supporting Documents Display */}
-          {application.documents && Object.keys(application.documents).length > 0 && (
-            <div style={{ marginTop: '1.5rem', borderTop: '1px solid var(--border-light)', paddingTop: '1rem' }}>
-              <span className="dossier-label" style={{ display: 'block', marginBottom: '0.75rem' }}>Supporting Documents</span>
+          <div style={{ marginTop: '1.5rem', borderTop: '1px solid var(--border-light)', paddingTop: '1rem' }}>
+            <span className="dossier-label" style={{ display: 'block', marginBottom: '0.75rem' }}>Supporting Documents</span>
+            {Object.keys(application.documents ?? {}).length > 0 ? (
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
-                {Object.entries(application.documents).map(([filename, dataUrl]) => (
+                {Object.entries(application.documents ?? {}).map(([filename, dataUrl]) => (
                   <div
                     key={filename}
                     style={{
@@ -478,7 +483,18 @@ export const AdminApplicationDetailPage: React.FC = () => {
                       <a
                         href={dataUrl}
                         download={filename}
-                        style={{ color: 'var(--accent-olive)', fontSize: '0.8rem', display: 'inline-flex', alignItems: 'center', gap: '0.25rem' }}
+                        style={{
+                          color: '#fff',
+                          backgroundColor: 'var(--accent-olive)',
+                          fontSize: '0.775rem',
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.35rem',
+                          padding: '0.4rem 0.85rem',
+                          borderRadius: '4px',
+                          fontWeight: 600,
+                          textDecoration: 'none'
+                        }}
                       >
                         <FileText size={13} /> Download PDF
                       </a>
@@ -486,8 +502,12 @@ export const AdminApplicationDetailPage: React.FC = () => {
                   </div>
                 ))}
               </div>
-            </div>
-          )}
+            ) : (
+              <span style={{ fontSize: '0.875rem', color: 'var(--text-muted)', fontStyle: 'italic' }}>
+                No supporting documents were uploaded with this application.
+              </span>
+            )}
+          </div>
         </div>
 
         {/* Footer actions */}
