@@ -94,6 +94,13 @@ create table if not exists public.applications (
 alter table public.properties enable row level security;
 alter table public.applications enable row level security;
 
+-- Drop existing policies if re-running
+drop policy if exists "Allow public read access to properties" on public.properties;
+drop policy if exists "Allow public application submission" on public.applications;
+drop policy if exists "Allow staff full access to applications" on public.applications;
+drop policy if exists "Allow read access to applications" on public.applications;
+drop policy if exists "Allow update access to applications" on public.applications;
+
 -- Policies for Properties: Public read access for available listings
 create policy "Allow public read access to properties" 
   on public.properties 
