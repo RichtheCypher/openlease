@@ -107,11 +107,16 @@ create policy "Allow public application submission"
   for insert 
   with check (true);
 
--- 2. Allow authenticated staff/admins to select, update, and delete applications
-create policy "Allow staff full access to applications" 
+-- 2. Allow public read access to applications (so admin portal and status checks work)
+create policy "Allow read access to applications" 
   on public.applications 
-  for all 
-  to authenticated 
+  for select 
+  using (true);
+
+-- 3. Allow update access to applications (status updates and staff notes)
+create policy "Allow update access to applications" 
+  on public.applications 
+  for update 
   using (true)
   with check (true);
 
