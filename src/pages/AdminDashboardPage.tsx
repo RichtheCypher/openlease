@@ -179,14 +179,37 @@ export const AdminDashboardPage: React.FC = () => {
             </p>
           </div>
 
-          <button
-            onClick={loadApplications}
-            className="btn btn-secondary btn-sm"
-            style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}
-          >
-            <RefreshCw size={13} />
-            Refresh Queue
-          </button>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <span style={{
+              fontSize: '0.75rem',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.35rem',
+              padding: '0.3rem 0.65rem',
+              borderRadius: '9999px',
+              backgroundColor: store.isConfigured() ? 'var(--status-approved-bg)' : 'var(--status-review-bg)',
+              color: store.isConfigured() ? 'var(--status-approved)' : 'var(--status-review)',
+              fontWeight: 500,
+              border: `1px solid ${store.isConfigured() ? 'rgba(46, 125, 50, 0.2)' : 'rgba(180, 83, 9, 0.2)'}`
+            }}>
+              <span style={{
+                width: '6px',
+                height: '6px',
+                borderRadius: '50%',
+                backgroundColor: store.isConfigured() ? 'var(--status-approved)' : 'var(--status-review)'
+              }} />
+              {store.isConfigured() ? 'Supabase Live' : 'Local Storage Mode'}
+            </span>
+
+            <button
+              onClick={loadApplications}
+              className="btn btn-secondary btn-sm"
+              style={{ display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+            >
+              <RefreshCw size={13} className={loading ? 'animate-spin' : ''} />
+              Refresh Queue
+            </button>
+          </div>
         </div>
 
         {/* Overview Metric Cards */}

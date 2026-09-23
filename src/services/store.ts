@@ -20,6 +20,10 @@ function initializeLocalStore() {
 initializeLocalStore();
 
 export const store = {
+  isConfigured(): boolean {
+    return isSupabaseConfigured;
+  },
+
   // PROPERTIES
   async getProperties(): Promise<Property[]> {
     if (isSupabaseConfigured && supabase) {
