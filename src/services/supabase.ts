@@ -1,15 +1,25 @@
 import { createClient } from '@supabase/supabase-js';
 
-const supabaseUrl = import.meta.env.VITE_SUPABASE_URL || '';
-const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+const rawUrl = (import.meta.env.VITE_SUPABASE_URL || '').trim();
+const rawKey = (import.meta.env.VITE_SUPABASE_ANON_KEY || '').trim();
 
 export const isSupabaseConfigured = Boolean(
-  supabaseUrl && 
-  supabaseAnonKey && 
-  supabaseUrl !== 'https://your-project.supabase.co' &&
-  !supabaseUrl.includes('your-project')
+  rawUrl && 
+  rawKey && 
+  rawUrl !== 'https://your-project.supabase.co' &&
+  !rawUrl.includes('your-project')
 );
 
+export const getSupabaseDebugInfo = () => {
+  return {
+    hasUrl: Boolean(rawUrl),
+    urlPreview: rawUrl ? `${rawUrl.slice(0, 18)}...` : 'EMPTY',
+    hasKey: Boolean(rawKey),
+    keyLength: rawKey ? rawKey.length : 0,
+    isConfigured: isSupabaseConfigured
+  };
+};
+
 export const supabase = isSupabaseConfigured
-  ? createClient(supabaseUrl, supabaseAnonKey)
+  ? createClient(rawUrl, rawKey)
   : null;

@@ -212,6 +212,28 @@ export const AdminDashboardPage: React.FC = () => {
           </div>
         </div>
 
+        {/* Local Storage Diagnostic Notice */}
+        {!store.isConfigured() && (
+          <div style={{
+            backgroundColor: '#FFFBEB',
+            border: '1px solid #FDE68A',
+            borderRadius: 'var(--radius-sm)',
+            padding: '1rem 1.25rem',
+            marginBottom: '1.75rem',
+            fontSize: '0.85rem',
+            color: '#92400E',
+            lineHeight: 1.5
+          }}>
+            <strong>⚡ Note on Local Storage Mode:</strong> Live Supabase connection is currently not active because the environment variables are not detected in this build.
+            <div style={{ marginTop: '0.35rem', fontSize: '0.8rem', color: '#78350F' }}>
+              • <code>VITE_SUPABASE_URL</code>: {store.getDebugInfo().hasUrl ? 'Found' : 'MISSING'} | • <code>VITE_SUPABASE_ANON_KEY</code>: {store.getDebugInfo().hasKey ? `Found (${store.getDebugInfo().keyLength} chars)` : 'MISSING'}
+            </div>
+            <div style={{ marginTop: '0.35rem', fontSize: '0.775rem', color: '#B45309' }}>
+              To fix: Add both <strong>VITE_SUPABASE_URL</strong> and <strong>VITE_SUPABASE_ANON_KEY</strong> to Vercel Settings → Environment Variables, then click <strong>Redeploy</strong>.
+            </div>
+          </div>
+        )}
+
         {/* Overview Metric Cards */}
         <div style={{
           display: 'grid',
