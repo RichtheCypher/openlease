@@ -1,138 +1,150 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, CheckCircle2, ArrowUpRight } from 'lucide-react';
+import { ArrowRight, CheckCircle2, MapPin, Sparkles, Building, Trees, Compass, Home as HomeIcon } from 'lucide-react';
 
 export const HomePage: React.FC = () => {
 
   return (
     <div style={{ minHeight: '100vh' }}>
-      {/* 1. HERO SECTION */}
-      <section style={{
-        paddingTop: '3.5rem',
-        paddingBottom: '4.5rem',
-        borderBottom: '1px solid var(--border-light)',
-        backgroundColor: 'var(--bg-main)'
-      }}>
-        <div className="container">
-          <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
-            gap: '3.5rem 2.5rem',
-            alignItems: 'center'
-          }}>
-            {/* Left Content */}
-            <div style={{ maxWidth: '560px' }}>
+      {/* 1. CINEMATIC LUXURY HERO SECTION */}
+      <section className="hero-luxury-wrapper">
+        {/* Background Architectural Image */}
+        <img
+          src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=85"
+          alt="Modern Architecture Villa with Pool"
+          className="hero-luxury-bg"
+        />
+
+        {/* Ambient Darkened Gradient Vignette */}
+        <div className="hero-luxury-overlay" />
+
+        {/* Hero Main Content */}
+        <div className="container hero-luxury-content">
+          <div className="hero-grid">
+            {/* Left Col: Headlines, CTA, & Stats Card */}
+            <div>
               <div style={{
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '0.45rem',
+                gap: '0.5rem',
                 fontSize: '0.75rem',
-                fontWeight: 600,
+                fontWeight: 700,
                 textTransform: 'uppercase',
-                letterSpacing: '0.08em',
-                color: 'var(--accent-olive)',
-                marginBottom: '1rem',
-                backgroundColor: 'var(--accent-olive-light)',
-                padding: '0.35rem 0.75rem',
-                borderRadius: '2px'
+                letterSpacing: '0.12em',
+                color: '#E5D5C0',
+                marginBottom: '1.25rem',
+                backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                padding: '0.4rem 0.85rem',
+                borderRadius: '9999px',
+                backdropFilter: 'blur(8px)',
+                border: '1px solid rgba(255, 255, 255, 0.15)'
               }}>
-                <CheckCircle2 size={13} />
+                <Sparkles size={13} color="#E5D5C0" />
                 US Residential Leasing
               </div>
 
-              <h1 style={{
-                marginBottom: '1.25rem',
-                color: 'var(--text-primary)',
-                letterSpacing: '-0.025em'
-              }}>
-                A straightforward way to find and lease your next home.
+              <h1 className="hero-title">
+                FIND YOUR<br />DREAM HOME
               </h1>
 
-              <p style={{
-                fontSize: '1.125rem',
-                color: 'var(--text-secondary)',
-                lineHeight: 1.6,
-                marginBottom: '2rem'
-              }}>
-                OpenLeasewithus connects prospective tenants with quality single-family homes and townhomes across American neighborhoods. Browse available residences and submit your rental application online.
+              <p className="hero-subtitle">
+                Beautiful properties. Better living. Straightforward residential leasing across premier American neighborhoods.
               </p>
 
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.85rem' }}>
-                <Link to="/apply" className="btn btn-primary btn-lg">
-                  Start Your Application
-                  <ArrowRight size={16} />
-                </Link>
-                <Link to="/testimonials" className="btn btn-secondary btn-lg">
-                  Read Testimonials
+              {/* Pill CTA Button with Round Arrow Badge */}
+              <div>
+                <Link to="/apply" className="hero-cta-btn">
+                  <span>Explore Properties</span>
+                  <div className="hero-cta-icon-badge">
+                    <ArrowRight size={18} strokeWidth={2.2} />
+                  </div>
                 </Link>
               </div>
 
-              <div style={{
-                marginTop: '2.5rem',
-                paddingTop: '1.75rem',
-                borderTop: '1px solid var(--border-light)',
-                display: 'flex',
-                alignItems: 'center',
-                gap: '2rem'
-              }}>
-                <div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Direct Inquiries</div>
-                  <a href="mailto:Openleasewithus@gmail.com" style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)' }}>
-                    Openleasewithus@gmail.com
-                  </a>
+              {/* Floating Metric Card (Bottom Left) */}
+              <div className="hero-stat-card">
+                <div className="hero-stat-thumb">
+                  <img
+                    src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=300&q=80"
+                    alt="Listed properties preview"
+                  />
                 </div>
-                <div style={{ height: '24px', width: '1px', backgroundColor: 'var(--border-light)' }} />
                 <div>
-                  <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>Application</div>
-                  <div style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-primary)' }}>100% Online Review</div>
+                  <div className="hero-stat-number">2,500+</div>
+                  <div className="hero-stat-label">
+                    Properties listed across the country
+                  </div>
                 </div>
               </div>
             </div>
 
-            {/* Right Hero Image Frame */}
+            {/* Right Col: Floating Showcase Property Card */}
             <div>
-              <div style={{
-                position: 'relative',
-                border: '1px solid var(--border-medium)',
-                borderRadius: 'var(--radius-sm)',
-                overflow: 'hidden',
-                backgroundColor: 'var(--bg-surface)',
-                boxShadow: 'var(--shadow-hover)'
-              }}>
-                <img
-                  src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80"
-                  alt="Quality residential home leasing"
-                  style={{
-                    width: '100%',
-                    height: '460px',
-                    objectFit: 'cover'
-                  }}
-                />
-                <div style={{
-                  padding: '1.25rem 1.5rem',
-                  backgroundColor: 'var(--bg-surface)',
-                  borderTop: '1px solid var(--border-light)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'space-between'
-                }}>
-                  <div>
-                    <div style={{ fontSize: '0.9rem', fontWeight: 600, color: 'var(--text-primary)' }}>
-                      Featured Residence · Austin, TX
-                    </div>
-                    <div style={{ fontSize: '0.8rem', color: 'var(--text-secondary)' }}>
-                      3 beds · 2 baths · Fenced Backyard
+              <div className="hero-showcase-card">
+                <div className="hero-showcase-image-wrap">
+                  <img
+                    src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80"
+                    alt="Modern Villa with Infinity Pool"
+                  />
+                </div>
+
+                <div className="hero-showcase-meta">
+                  {/* Agent Bio Row */}
+                  <div className="hero-agent-row">
+                    <img
+                      src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=120&q=80"
+                      alt="Emma Carter"
+                      className="hero-agent-avatar"
+                    />
+                    <div>
+                      <div className="hero-agent-name">Emma Carter</div>
+                      <div className="hero-agent-role">Real Estate & Leasing Agent</div>
                     </div>
                   </div>
-                  <Link
-                    to="/testimonials"
-                    className="btn btn-secondary btn-sm"
-                    style={{ display: 'flex', alignItems: 'center', gap: '0.3rem' }}
-                  >
-                    Read Reviews
-                    <ArrowUpRight size={14} />
+
+                  {/* Property Info */}
+                  <h3 className="hero-showcase-title">
+                    Modern Villa with Infinity Pool
+                  </h3>
+
+                  <div className="hero-showcase-location">
+                    <MapPin size={14} color="#888277" />
+                    <span>Los Angeles, California</span>
+                  </div>
+
+                  <Link to="/apply" className="hero-showcase-btn">
+                    <span>View Details</span>
+                    <ArrowRight size={15} />
                   </Link>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Partner Brand Ribbon */}
+        <div className="hero-partner-ribbon">
+          <div className="container">
+            <div className="hero-partner-list">
+              <div className="hero-partner-item">
+                <HomeIcon size={16} strokeWidth={1.8} />
+                <span>Lumina</span>
+              </div>
+              <div className="hero-partner-item">
+                <Sparkles size={16} strokeWidth={1.8} />
+                <span>Velora</span>
+              </div>
+              <div className="hero-partner-item">
+                <Building size={16} strokeWidth={1.8} />
+                <span>Stonehaven</span>
+              </div>
+              <div className="hero-partner-item">
+                <Trees size={16} strokeWidth={1.8} />
+                <span>Evergreen</span>
+              </div>
+              <div className="hero-partner-item">
+                <Compass size={16} strokeWidth={1.8} />
+                <span>Horizon</span>
               </div>
             </div>
           </div>
