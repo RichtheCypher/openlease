@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, CheckCircle2, MapPin, Sparkles, Building, Trees, Compass, Home as HomeIcon } from 'lucide-react';
+import { ArrowRight, Sparkles, CheckCircle2 } from 'lucide-react';
 
 export const HomePage: React.FC = () => {
 
   return (
     <div style={{ minHeight: '100vh' }}>
       {/* 1. CINEMATIC LUXURY HERO SECTION */}
-      <section className="hero-luxury-wrapper">
+      <section className="hero-luxury-wrapper" style={{ minHeight: '80vh', justifyContent: 'center' }}>
         {/* Background Architectural Image */}
         <img
           src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=2000&q=85"
@@ -19,133 +19,44 @@ export const HomePage: React.FC = () => {
         <div className="hero-luxury-overlay" />
 
         {/* Hero Main Content */}
-        <div className="container hero-luxury-content">
-          <div className="hero-grid">
-            {/* Left Col: Headlines, CTA, & Stats Card */}
-            <div>
-              <div style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '0.5rem',
-                fontSize: '0.75rem',
-                fontWeight: 700,
-                textTransform: 'uppercase',
-                letterSpacing: '0.12em',
-                color: '#E5D5C0',
-                marginBottom: '1.25rem',
-                backgroundColor: 'rgba(255, 255, 255, 0.1)',
-                padding: '0.4rem 0.85rem',
-                borderRadius: '9999px',
-                backdropFilter: 'blur(8px)',
-                border: '1px solid rgba(255, 255, 255, 0.15)'
-              }}>
-                <Sparkles size={13} color="#E5D5C0" />
-                US Residential Leasing
-              </div>
-
-              <h1 className="hero-title">
-                FIND YOUR<br />DREAM HOME
-              </h1>
-
-              <p className="hero-subtitle">
-                Beautiful properties. Better living. Straightforward residential leasing across premier American neighborhoods.
-              </p>
-
-              {/* Pill CTA Button with Round Arrow Badge */}
-              <div>
-                <Link to="/apply" className="hero-cta-btn">
-                  <span>Explore Properties</span>
-                  <div className="hero-cta-icon-badge">
-                    <ArrowRight size={18} strokeWidth={2.2} />
-                  </div>
-                </Link>
-              </div>
-
-              {/* Floating Metric Card (Bottom Left) */}
-              <div className="hero-stat-card">
-                <div className="hero-stat-thumb">
-                  <img
-                    src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=300&q=80"
-                    alt="Listed properties preview"
-                  />
-                </div>
-                <div>
-                  <div className="hero-stat-number">2,500+</div>
-                  <div className="hero-stat-label">
-                    Properties listed across the country
-                  </div>
-                </div>
-              </div>
+        <div className="container hero-luxury-content" style={{ padding: '6rem 1.5rem', width: '100%' }}>
+          <div style={{ maxWidth: '680px' }}>
+            <div style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              fontSize: '0.75rem',
+              fontWeight: 700,
+              textTransform: 'uppercase',
+              letterSpacing: '0.12em',
+              color: '#E5D5C0',
+              marginBottom: '1.25rem',
+              backgroundColor: 'rgba(255, 255, 255, 0.1)',
+              padding: '0.4rem 0.85rem',
+              borderRadius: '9999px',
+              backdropFilter: 'blur(8px)',
+              border: '1px solid rgba(255, 255, 255, 0.15)'
+            }}>
+              <Sparkles size={13} color="#E5D5C0" />
+              US Residential Leasing
             </div>
 
-            {/* Right Col: Floating Showcase Property Card */}
+            <h1 className="hero-title" style={{ fontSize: 'clamp(2.75rem, 6vw, 4.8rem)' }}>
+              FIND YOUR<br />DREAM HOME
+            </h1>
+
+            <p className="hero-subtitle" style={{ fontSize: 'clamp(1.1rem, 1.8vw, 1.35rem)', maxWidth: '560px', marginBottom: '2.5rem' }}>
+              Beautiful properties. Better living. Straightforward residential leasing across premier American neighborhoods.
+            </p>
+
+            {/* Pill CTA Button with Round Arrow Badge */}
             <div>
-              <div className="hero-showcase-card">
-                <div className="hero-showcase-image-wrap">
-                  <img
-                    src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=800&q=80"
-                    alt="Modern Villa with Infinity Pool"
-                  />
+              <Link to="/apply" className="hero-cta-btn">
+                <span>Explore Properties</span>
+                <div className="hero-cta-icon-badge">
+                  <ArrowRight size={18} strokeWidth={2.2} />
                 </div>
-
-                <div className="hero-showcase-meta">
-                  {/* Agent Bio Row */}
-                  <div className="hero-agent-row">
-                    <img
-                      src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=120&q=80"
-                      alt="Emma Carter"
-                      className="hero-agent-avatar"
-                    />
-                    <div>
-                      <div className="hero-agent-name">Emma Carter</div>
-                      <div className="hero-agent-role">Real Estate & Leasing Agent</div>
-                    </div>
-                  </div>
-
-                  {/* Property Info */}
-                  <h3 className="hero-showcase-title">
-                    Modern Villa with Infinity Pool
-                  </h3>
-
-                  <div className="hero-showcase-location">
-                    <MapPin size={14} color="#888277" />
-                    <span>Los Angeles, California</span>
-                  </div>
-
-                  <Link to="/apply" className="hero-showcase-btn">
-                    <span>View Details</span>
-                    <ArrowRight size={15} />
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Bottom Partner Brand Ribbon */}
-        <div className="hero-partner-ribbon">
-          <div className="container">
-            <div className="hero-partner-list">
-              <div className="hero-partner-item">
-                <HomeIcon size={16} strokeWidth={1.8} />
-                <span>Lumina</span>
-              </div>
-              <div className="hero-partner-item">
-                <Sparkles size={16} strokeWidth={1.8} />
-                <span>Velora</span>
-              </div>
-              <div className="hero-partner-item">
-                <Building size={16} strokeWidth={1.8} />
-                <span>Stonehaven</span>
-              </div>
-              <div className="hero-partner-item">
-                <Trees size={16} strokeWidth={1.8} />
-                <span>Evergreen</span>
-              </div>
-              <div className="hero-partner-item">
-                <Compass size={16} strokeWidth={1.8} />
-                <span>Horizon</span>
-              </div>
+              </Link>
             </div>
           </div>
         </div>
