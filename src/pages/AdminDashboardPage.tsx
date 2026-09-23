@@ -212,27 +212,50 @@ export const AdminDashboardPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Local Storage Diagnostic Notice */}
-        {!store.isConfigured() && (
-          <div style={{
-            backgroundColor: '#FFFBEB',
-            border: '1px solid #FDE68A',
-            borderRadius: 'var(--radius-sm)',
-            padding: '1rem 1.25rem',
-            marginBottom: '1.75rem',
-            fontSize: '0.85rem',
-            color: '#92400E',
-            lineHeight: 1.5
-          }}>
-            <strong>⚡ Note on Local Storage Mode:</strong> Live Supabase connection is currently not active because the environment variables are not detected in this build.
-            <div style={{ marginTop: '0.35rem', fontSize: '0.8rem', color: '#78350F' }}>
-              • <code>VITE_SUPABASE_URL</code>: {store.getDebugInfo().hasUrl ? 'Found' : 'MISSING'} | • <code>VITE_SUPABASE_ANON_KEY</code>: {store.getDebugInfo().hasKey ? `Found (${store.getDebugInfo().keyLength} chars)` : 'MISSING'}
+        {/* Supabase Connection Setup Card */}
+        <div style={{
+          backgroundColor: store.isConfigured() ? 'var(--bg-surface)' : '#FFFBEB',
+          border: `1px solid ${store.isConfigured() ? 'var(--border-light)' : '#FDE68A'}`,
+          borderRadius: 'var(--radius-sm)',
+          padding: '1.25rem 1.5rem',
+          marginBottom: '2rem',
+          boxShadow: 'var(--shadow-subtle)'
+        }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem' }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+                <span style={{
+                  width: '8px',
+                  height: '8px',
+                  borderRadius: '50%',
+                  backgroundColor: store.isConfigured() ? 'var(--status-approved)' : 'var(--status-review)'
+                }} />
+                <strong style={{ fontSize: '0.95rem', color: 'var(--text-primary)' }}>
+                  {store.isConfigured() ? 'Supabase Database Connected' : 'Supabase Setup Required (Currently Local Mode)'}
+                </strong>
+              </div>
+              <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', marginTop: '0.25rem', margin: 0 }}>
+                {store.isConfigured()
+                  ? 'All applications submitted by visitors on any device are actively syncing to your cloud Supabase database.'
+                  : 'Enter your Supabase credentials below to connect your database live without needing to redeploy.'}
+              </p>
             </div>
-            <div style={{ marginTop: '0.35rem', fontSize: '0.775rem', color: '#B45309' }}>
-              To fix: Add both <strong>VITE_SUPABASE_URL</strong> and <strong>VITE_SUPABASE_ANON_KEY</strong> to Vercel Settings → Environment Variables, then click <strong>Redeploy</strong>.
-            </div>
+
+            <button
+              onClick={() => {
+                const url = window.prompt('Enter your Supabase Project URL (e.g. https://xyz.supabase.co):');
+                if (!url) return;
+                const key = window.prompt('Enter your Supabase anon public key:');
+                if (!key) return;
+                store.saveCredentials(url, key);
+              }}
+              className="btn btn-secondary btn-sm"
+              style={{ fontSize: '0.8rem' }}
+            >
+              {store.isConfigured() ? 'Update Supabase Keys' : 'Connect Supabase Now'}
+            </button>
           </div>
-        )}
+        </div>
 
         {/* Overview Metric Cards */}
         <div style={{

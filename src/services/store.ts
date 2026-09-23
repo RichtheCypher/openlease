@@ -1,6 +1,6 @@
 import type { Property, RentalApplication, ApplicationStatus } from '../types';
 import { INITIAL_PROPERTIES, INITIAL_APPLICATIONS } from '../data/initialProperties';
-import { supabase, isSupabaseConfigured, getSupabaseDebugInfo } from './supabase';
+import { supabase, isSupabaseConfigured, getSupabaseDebugInfo, setRuntimeSupabaseConfig, clearRuntimeSupabaseConfig } from './supabase';
 
 const PROPERTIES_KEY = 'openleasewithus_properties';
 const APPLICATIONS_KEY = 'openleasewithus_applications';
@@ -26,6 +26,14 @@ export const store = {
 
   getDebugInfo() {
     return getSupabaseDebugInfo();
+  },
+
+  saveCredentials(url: string, key: string) {
+    setRuntimeSupabaseConfig(url, key);
+  },
+
+  clearCredentials() {
+    clearRuntimeSupabaseConfig();
   },
 
   // PROPERTIES
