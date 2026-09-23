@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
-import { 
+import {
   Check, ArrowRight, ArrowLeft, CheckCircle2,
   Home, User, Building, Users, Clock, DollarSign, FileText,
   PenLine, Upload, Trash2, FileText as FileIcon, Image as ImageIcon
@@ -887,7 +887,7 @@ export const ApplyPage: React.FC = () => {
                           type="radio"
                           name="payment_method"
                           checked={isSelected}
-                          onChange={() => {}}
+                          onChange={() => { }}
                         />
                         <div style={{ fontWeight: 600, fontSize: '0.9rem' }}>{method}</div>
                         <span style={{ fontSize: '0.725rem', color: 'var(--text-muted)' }}>Verified US Method</span>
