@@ -311,48 +311,23 @@ export const ApplyPage: React.FC = () => {
   // SUCCESS SCREEN
   if (submittedRef) {
     return (
-      <div style={{ minHeight: '80vh', backgroundColor: 'var(--bg-main)', padding: '5rem 1.5rem' }}>
+      <div className="success-screen-wrapper">
         <div className="container-narrow">
-          <div style={{
-            backgroundColor: 'var(--bg-surface)',
-            border: '1px solid var(--border-medium)',
-            borderRadius: 'var(--radius-sm)',
-            padding: '3.5rem 2.5rem',
-            textAlign: 'center',
-            boxShadow: 'var(--shadow-hover)'
-          }}>
-            <div style={{
-              width: '64px',
-              height: '64px',
-              borderRadius: '50%',
-              backgroundColor: 'var(--status-approved-bg)',
-              color: 'var(--status-approved)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 1.5rem'
-            }}>
+          <div className="success-card">
+            <div className="success-icon-badge">
               <CheckCircle2 size={36} />
             </div>
 
             <span className="eyebrow" style={{ color: 'var(--accent-olive)', display: 'block', marginBottom: '0.35rem' }}>
               Submission Received
             </span>
-            <h1 style={{ fontSize: '2rem', marginBottom: '1rem' }}>Application Submitted</h1>
+            <h1 className="success-title">Application Submitted</h1>
 
-            <div style={{
-              backgroundColor: 'var(--bg-subtle)',
-              border: '1px solid var(--border-medium)',
-              borderRadius: 'var(--radius-sm)',
-              padding: '1.25rem',
-              display: 'inline-block',
-              margin: '1rem 0 1.75rem',
-              minWidth: '280px'
-            }}>
+            <div className="success-ref-box">
               <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
                 Application Reference Number
               </div>
-              <div style={{ fontSize: '1.5rem', fontWeight: 700, fontFamily: 'monospace', letterSpacing: '0.05em', color: 'var(--text-primary)', marginTop: '0.25rem' }}>
+              <div className="success-ref-code">
                 {submittedRef}
               </div>
             </div>
@@ -371,29 +346,8 @@ export const ApplyPage: React.FC = () => {
             </p>
 
             {/* Application Fee Notice */}
-            <div style={{
-              backgroundColor: 'var(--accent-olive-light)',
-              border: '1px solid var(--accent-olive)',
-              borderRadius: 'var(--radius-sm)',
-              padding: '1.25rem 1.5rem',
-              maxWidth: '560px',
-              margin: '0 auto 2.25rem',
-              textAlign: 'left',
-              display: 'flex',
-              gap: '1rem',
-              alignItems: 'flex-start'
-            }}>
-              <div style={{
-                color: 'var(--accent-olive)',
-                backgroundColor: 'rgba(51, 68, 56, 0.1)',
-                borderRadius: '50%',
-                padding: '6px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                flexShrink: 0,
-                marginTop: '2px'
-              }}>
+            <div className="success-fee-notice">
+              <div className="success-fee-icon">
                 <Check size={18} strokeWidth={2.5} />
               </div>
               <div>
@@ -406,18 +360,11 @@ export const ApplyPage: React.FC = () => {
               </div>
             </div>
 
-            <div style={{
-              borderTop: '1px solid var(--border-light)',
-              paddingTop: '1.75rem',
-              display: 'flex',
-              justifyContent: 'center',
-              gap: '1rem',
-              flexWrap: 'wrap'
-            }}>
-              <Link to="/" className="btn btn-primary">
+            <div className="success-actions">
+              <Link to="/" className="btn btn-primary" style={{ minWidth: '160px', textAlign: 'center' }}>
                 Return Home
               </Link>
-              <Link to="/testimonials" className="btn btn-secondary">
+              <Link to="/testimonials" className="btn btn-secondary" style={{ minWidth: '160px', textAlign: 'center' }}>
                 Read Testimonials
               </Link>
             </div>

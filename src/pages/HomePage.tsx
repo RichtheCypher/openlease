@@ -52,7 +52,7 @@ export const HomePage: React.FC = () => {
             {/* Pill CTA Button with Round Arrow Badge */}
             <div>
               <Link to="/apply" className="hero-cta-btn">
-                <span>Explore Properties</span>
+                <span>Apply Now</span>
                 <div className="hero-cta-icon-badge">
                   <ArrowRight size={18} strokeWidth={2.2} />
                 </div>
