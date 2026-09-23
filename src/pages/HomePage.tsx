@@ -270,7 +270,7 @@ export const HomePage: React.FC = () => {
                   <div>
                     <h4 style={{ fontSize: '0.95rem', marginBottom: '0.2rem' }}>Quality Residential Properties</h4>
                     <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-                      Every home is thoroughly inspected, documented with authentic photography, and ready for occupancy.
+                      Every home is thoroughly inspected, documented with authentic photography, and available for immediate move in hand
                     </p>
                   </div>
                 </div>

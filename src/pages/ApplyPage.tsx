@@ -366,9 +366,45 @@ export const ApplyPage: React.FC = () => {
             }}>
               Thank you, <strong>{formData.first_name}</strong>. Your rental application has been received and our leasing team has been notified.
             </p>
-            <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginBottom: '2.25rem' }}>
+            <p style={{ fontSize: '0.875rem', color: 'var(--text-muted)', marginBottom: '1.75rem' }}>
               We will review your information and contact you at <strong>{formData.email}</strong> regarding next steps.
             </p>
+
+            {/* Application Fee Notice */}
+            <div style={{
+              backgroundColor: 'var(--accent-olive-light)',
+              border: '1px solid var(--accent-olive)',
+              borderRadius: 'var(--radius-sm)',
+              padding: '1.25rem 1.5rem',
+              maxWidth: '560px',
+              margin: '0 auto 2.25rem',
+              textAlign: 'left',
+              display: 'flex',
+              gap: '1rem',
+              alignItems: 'flex-start'
+            }}>
+              <div style={{
+                color: 'var(--accent-olive)',
+                backgroundColor: 'rgba(51, 68, 56, 0.1)',
+                borderRadius: '50%',
+                padding: '6px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                flexShrink: 0,
+                marginTop: '2px'
+              }}>
+                <Check size={18} strokeWidth={2.5} />
+              </div>
+              <div>
+                <h4 style={{ fontSize: '0.95rem', fontWeight: 600, color: 'var(--accent-olive)', marginBottom: '0.25rem' }}>
+                  Next Step: Submit Application Fee
+                </h4>
+                <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)', margin: 0, lineHeight: 1.5 }}>
+                  Please reach out directly to the Landlord to submit your refundable application fee via your selected payment method (<strong>{formData.preferred_payment_method}</strong>) to finalize the review process.
+                </p>
+              </div>
+            </div>
 
             <div style={{
               borderTop: '1px solid var(--border-light)',
@@ -886,7 +922,7 @@ export const ApplyPage: React.FC = () => {
             <div>
               <h2 style={{ fontSize: '1.4rem', marginBottom: '0.35rem' }}>06 Financial Information</h2>
               <p className="text-secondary" style={{ fontSize: '0.875rem', marginBottom: '1.75rem' }}>
-                Please specify your preferred payment method and available move-in funds.
+                How would you like to pay for the refundable application fee?
               </p>
 
               <div className="form-group">
@@ -915,7 +951,7 @@ export const ApplyPage: React.FC = () => {
               </div>
 
               <div className="form-group" style={{ marginTop: '2rem' }}>
-                <label className="form-label">Amount Available to Secure the Property Today (USD) <span className="required">*</span></label>
+                <label className="form-label">How much do you have to secure the property for yourself today? <span className="required">*</span></label>
                 <div style={{ position: 'relative' }}>
                   <span style={{ position: 'absolute', left: '12px', top: '10px', color: 'var(--text-secondary)' }}>$</span>
                   <input
