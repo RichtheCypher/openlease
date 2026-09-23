@@ -275,17 +275,6 @@ export const HomePage: React.FC = () => {
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', gap: '0.85rem' }}>
-                  <div style={{ marginTop: '0.15rem', color: 'var(--accent-olive)' }}>
-                    <CheckCircle2 size={18} />
-                  </div>
-                  <div>
-                    <h4 style={{ fontSize: '0.95rem', marginBottom: '0.2rem' }}>Clear Leasing Information</h4>
-                    <p style={{ fontSize: '0.875rem', color: 'var(--text-secondary)' }}>
-                      Upfront monthly rents, security deposits, verified amenities, and realistic availability dates.
-                    </p>
-                  </div>
-                </div>
 
                 <div style={{ display: 'flex', gap: '0.85rem' }}>
                   <div style={{ marginTop: '0.15rem', color: 'var(--accent-olive)' }}>
