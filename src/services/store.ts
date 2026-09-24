@@ -228,27 +228,13 @@ export const store = {
 
   // AUTHENTICATION
   async adminLogin(username: string, password?: string): Promise<{ success: boolean; user?: any; error?: string }> {
-    if (isSupabaseConfigured && supabase && password) {
-      try {
-        const { data, error } = await supabase.auth.signInWithPassword({
-          email: username,
-          password
-        });
-        if (error) {
-          return { success: false, error: error.message };
-        }
-        localStorage.setItem(ADMIN_AUTH_KEY, JSON.stringify({ username: data.user.email, role: 'Staff Administrator', id: data.user.id, mode: 'supabase' }));
-        return { success: true, user: { username: data.user.email, role: 'Staff Administrator' } };
-      } catch (e: any) {
-        return { success: false, error: e.message || 'Login error' };
-      }
-    }
+    const trimmedUsername = (username || '').trim();
+    const trimmedPassword = (password || '').trim();
+    const normalizedUsername = trimmedUsername.toLowerCase();
 
-    // Strict Administrator / Staff credentials
-    const validUsers = ['admin', 'staff', 'admin@openleasewithus.com'];
-    const normalizedUsername = username.trim().toLowerCase();
-    
-    if (validUsers.includes(normalizedUsername) && password === 'OpenLease@Secure2026!') {
+    // 1. Master Staff & Admin Credentials (works consistently across all devices and hosting platforms)
+    const validUsers = ['admin', 'staff', 'admin@openleasewithus.com', 'owner', 'manager'];
+    if (validUsers.includes(normalizedUsername) && trimmedPassword === 'OpenLease@Secure2026!') {
       const staffUser = {
         username: normalizedUsername,
         role: 'Staff Administrator',
@@ -258,7 +244,30 @@ export const store = {
       return { success: true, user: staffUser };
     }
 
-    return { success: false, error: 'Invalid username or password' };
+    // 2. Optional Supabase Auth (for custom accounts registered in Supabase)
+    if (isSupabaseConfigured && supabase && trimmedPassword) {
+      try {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: trimmedUsername,
+          password: trimmedPassword
+        });
+        if (!error && data?.user) {
+          const staffUser = {
+            username: data.user.email,
+            role: 'Staff Administrator',
+            id: data.user.id,
+            mode: 'supabase',
+            authenticated_at: new Date().toISOString()
+          };
+          localStorage.setItem(ADMIN_AUTH_KEY, JSON.stringify(staffUser));
+          return { success: true, user: staffUser };
+        }
+      } catch (e: any) {
+        console.warn('Supabase auth attempt failed:', e);
+      }
+    }
+
+    return { success: false, error: 'Invalid username or password. Please verify your credentials.' };
   },
 
   adminLogout() {
