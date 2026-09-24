@@ -24,12 +24,6 @@ export const AdminLoginPage: React.FC = () => {
     setLoading(false);
   };
 
-  const handleQuickDemoLogin = async () => {
-    setLoading(true);
-    await store.adminLogin('staff', 'password123');
-    navigate('/admin');
-  };
-
   return (
     <div style={{
       minHeight: '100vh',
@@ -135,43 +129,6 @@ export const AdminLoginPage: React.FC = () => {
               <ArrowRight size={15} />
             </button>
           </form>
-
-          <div style={{
-            margin: '1.75rem 0 1.25rem',
-            display: 'flex',
-            alignItems: 'center',
-            gap: '0.75rem'
-          }}>
-            <div style={{ flexGrow: 1, height: '1px', backgroundColor: 'var(--border-light)' }} />
-            <span style={{ fontSize: '0.75rem', color: 'var(--text-muted)', textTransform: 'uppercase' }}>Demo Access</span>
-            <div style={{ flexGrow: 1, height: '1px', backgroundColor: 'var(--border-light)' }} />
-          </div>
-
-          <button
-            type="button"
-            onClick={handleQuickDemoLogin}
-            disabled={loading}
-            className="btn btn-secondary btn-block btn-sm"
-          >
-            Sign In with Staff Demo Account
-          </button>
-
-          {/* Admin Credentials Info */}
-          <div style={{
-            marginTop: '1.5rem',
-            padding: '1rem',
-            backgroundColor: 'var(--bg-subtle)',
-            border: '1px solid var(--border-light)',
-            borderRadius: 'var(--radius-sm)',
-            fontSize: '0.75rem',
-            color: 'var(--text-secondary)',
-            lineHeight: 1.6
-          }}>
-            <div style={{ fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.35rem' }}>Admin Credentials</div>
-            <div><strong>Demo Username:</strong> staff</div>
-            <div><strong>Demo Password:</strong> password123</div>
-            <div><strong>Access:</strong> Any staff username with matching password</div>
-          </div>
         </div>
 
         <div style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.8125rem' }}>

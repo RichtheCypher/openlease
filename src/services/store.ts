@@ -244,23 +244,16 @@ export const store = {
       }
     }
 
-    // Username/password authentication (no email-based login)
-    if (username.toLowerCase() === 'staff' && password === 'password123') {
-      const staffUser = { username: 'staff', role: 'Staff Administrator', authenticated_at: new Date().toISOString() };
-      localStorage.setItem(ADMIN_AUTH_KEY, JSON.stringify(staffUser));
-      return { success: true, user: staffUser };
-    }
-
-    // Accept demo credentials (any staff username with matching password)
-    if (username.toLowerCase() === 'admin' && password === 'admin123') {
-      const staffUser = { username: 'admin', role: 'Administrator', authenticated_at: new Date().toISOString() };
-      localStorage.setItem(ADMIN_AUTH_KEY, JSON.stringify(staffUser));
-      return { success: true, user: staffUser };
-    }
-
-    // Accept demo credentials (any username with password 'password123')
-    if (password === 'password123') {
-      const staffUser = { username, role: 'Leasing Staff', authenticated_at: new Date().toISOString() };
+    // Strict Administrator / Staff credentials
+    const validUsers = ['admin', 'staff', 'admin@openleasewithus.com'];
+    const normalizedUsername = username.trim().toLowerCase();
+    
+    if (validUsers.includes(normalizedUsername) && password === 'OpenLease@Secure2026!') {
+      const staffUser = {
+        username: normalizedUsername,
+        role: 'Staff Administrator',
+        authenticated_at: new Date().toISOString()
+      };
       localStorage.setItem(ADMIN_AUTH_KEY, JSON.stringify(staffUser));
       return { success: true, user: staffUser };
     }
